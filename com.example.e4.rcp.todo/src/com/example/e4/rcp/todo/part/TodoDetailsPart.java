@@ -7,7 +7,15 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.jface.bindings.keys.KeyStroke;
+import org.eclipse.jface.bindings.keys.ParseException;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,6 +45,26 @@ public class TodoDetailsPart {
 		summary = new Text(parent, SWT.BORDER);
 		summary.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				1, 1));
+
+		Image image = FieldDecorationRegistry.getDefault()
+				.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
+				.getImage();
+
+		ControlDecoration controlDecoration = new ControlDecoration(summary,
+				SWT.RIGHT | SWT.TOP);
+		controlDecoration.setShowOnlyOnFocus(true);
+		controlDecoration
+				.setDescriptionText("Use CTRL+SPACE to see possible values");
+		controlDecoration.setImage(image);
+
+		try {
+			new ContentProposalAdapter(summary, new TextContentAdapter(),
+					new SimpleContentProposalProvider(new String[] {
+							"Summary1", "Summary2" }),
+					KeyStroke.getInstance("Ctrl+Space"), null);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setText("Description");
