@@ -1,8 +1,12 @@
 package com.example.e4.rcp.todo.part;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -12,11 +16,14 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.example.e4.rcp.todo.model.Todo;
+
 public class TodoDetailsPart {
 	private Text summary;
 	private Text description;
 	private Button isDone;
 	private DateTime dateTime;
+	private Todo todo;
 
 	@PostConstruct
 	public void createPartControl(Composite parent) {
@@ -49,6 +56,23 @@ public class TodoDetailsPart {
 		isDone = new Button(parent, SWT.CHECK);
 		isDone.setBounds(0, 0, 115, 24);
 		isDone.setText("Done");
+	}
+
+	@Inject
+	public void setTodo(
+			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Todo todo) {
+		if (todo != null) {
+			this.todo = todo;
+			updateUserInterface(todo);
+		}
+	}
+
+	private void updateUserInterface(Todo todo) {
+		if (this.summary != null && !this.summary.isDisposed()) {
+			if (todo == null) {
+				return;
+			}
+		}
 	}
 
 	@Focus
