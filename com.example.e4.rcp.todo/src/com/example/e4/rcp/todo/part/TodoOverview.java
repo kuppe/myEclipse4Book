@@ -3,8 +3,10 @@ package com.example.e4.rcp.todo.part;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -50,17 +52,20 @@ public class TodoOverview {
 	}
 
 	@PostConstruct
-	public void createPart(Composite parent, final ITodoService model) {
+	public void createPart(final Composite parent, final ITodoService model) {
 		GridLayout gl_parent = new GridLayout(2, false);
 		gl_parent.horizontalSpacing = 10;
 		parent.setLayout(gl_parent);
 
-		Button btnLoadData = new Button(parent, SWT.NONE);
+		final Button btnLoadData = new Button(parent, SWT.NONE);
 		btnLoadData.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				label.setText("Todos #" + model.getTodos().size());
 				tv.setInput(model.getTodos());
+
+				btnLoadData.setText("Model Loaded successfully");
+				parent.layout();
 			}
 		});
 		btnLoadData.setText("Load Data");
@@ -70,7 +75,7 @@ public class TodoOverview {
 		label.setText("Todos not yet loaded");
 
 		text = new Text(parent, SWT.BORDER | SWT.H_SCROLL | SWT.SEARCH
-				| SWT.CANCEL);
+				| SWT.ICON_SEARCH | SWT.CANCEL);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		text.setMessage("Filter");
 		text.addModifyListener(new ModifyListener() {
@@ -90,7 +95,13 @@ public class TodoOverview {
 			}
 		});
 
-		tv = new TableViewer(parent);
+		Composite tableComposite = new Composite(parent, SWT.NONE);
+		tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 2, 1));
+		TableColumnLayout layout = new TableColumnLayout();
+		tableComposite.setLayout(layout);
+
+		tv = new TableViewer(tableComposite);
 		Table table = tv.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -106,7 +117,7 @@ public class TodoOverview {
 			}
 		});
 		tvc.getColumn().setText("Summary");
-		tvc.getColumn().setWidth(50);
+		layout.setColumnData(tvc.getColumn(), new ColumnWeightData(40));
 
 		// Description
 		TableViewerColumn tvc2 = new TableViewerColumn(tv, SWT.NONE);
@@ -118,7 +129,7 @@ public class TodoOverview {
 			}
 		});
 		tvc2.getColumn().setText("Description");
-		tvc2.getColumn().setWidth(50);
+		layout.setColumnData(tvc2.getColumn(), new ColumnWeightData(60));
 	}
 
 	@Focus
