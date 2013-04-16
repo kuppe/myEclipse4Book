@@ -4,8 +4,13 @@
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_sn1JkKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.perspectivestack.0">
       <children xsi:type="advanced:Perspective" xmi:id="_s4I2cKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.perspective.0">
         <children xsi:type="basic:PartSashContainer" xmi:id="_tR3lEKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partsashcontainer.0" horizontal="true">
-          <children xsi:type="basic:PartStack" xmi:id="_uGI6oKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partstack.0" containerData="40">
-            <children xsi:type="basic:Part" xmi:id="_uVBEIKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.part.todooverview" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.TodoOverview" label="TodoOverview"/>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_UbPA4KacEeK4esptrifP3g" elementId="com.example.e4.rcp.todo.partsashcontainer.2" containerData="40">
+            <children xsi:type="basic:PartStack" xmi:id="_uGI6oKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partstack.0" containerData="70">
+              <children xsi:type="basic:Part" xmi:id="_uVBEIKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.part.todooverview" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.TodoOverview" label="TodoOverview"/>
+            </children>
+            <children xsi:type="basic:PartStack" xmi:id="_WE0N0KacEeK4esptrifP3g" elementId="com.example.e4.rcp.todo.partstack.3" containerData="30">
+              <children xsi:type="basic:Part" xmi:id="_WbLfYKacEeK4esptrifP3g" elementId="com.example.e4.rcp.todo.part.delete" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.TodoDeletionPart" label="Delete Todos"/>
+            </children>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_uph7kKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partsashcontainer.1" containerData="60">
             <children xsi:type="basic:PartStack" xmi:id="_u9FJsKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partstack.1">
