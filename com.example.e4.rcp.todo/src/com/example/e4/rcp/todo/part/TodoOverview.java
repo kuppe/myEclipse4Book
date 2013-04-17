@@ -3,10 +3,14 @@ package com.example.e4.rcp.todo.part;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -52,7 +56,8 @@ public class TodoOverview {
 	}
 
 	@PostConstruct
-	public void createPart(final Composite parent, final ITodoService model) {
+	public void createPart(final Composite parent, final ITodoService model,
+			EMenuService menuService, final ESelectionService selectionService) {
 		GridLayout gl_parent = new GridLayout(2, false);
 		gl_parent.horizontalSpacing = 10;
 		parent.setLayout(gl_parent);
@@ -130,6 +135,16 @@ public class TodoOverview {
 		});
 		tvc2.getColumn().setText("Description");
 		layout.setColumnData(tvc2.getColumn(), new ColumnWeightData(60));
+
+		tv.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				selectionService.setSelection(event.getSelection());
+			}
+		});
+
+		menuService.registerContextMenu(tv.getTable(),
+				"com.example.e4.rcp.todo.popupmenu.table");
 	}
 
 	@Focus

@@ -92,7 +92,7 @@ public class MyTodoServiceImpl implements ITodoService {
 	private List<Todo> createInitialModel() {
 		ArrayList<Todo> list = new ArrayList<Todo>();
 		list.add(createTodo("Application model", "Learn the application model"));
-		list.add(createTodo("DI", "@Inject looks interesting"));
+		list.add(createTodo("DI", "@Inject looks interesting", true));
 		list.add(createTodo("SWT", "Learn Widgets"));
 		list.add(createTodo("JFace", "Especially Viewers!"));
 		list.add(createTodo("OSGi", "Services"));
@@ -100,6 +100,10 @@ public class MyTodoServiceImpl implements ITodoService {
 				"Learn how to style your application"));
 		list.add(createTodo("Compatibility Layer", "Run Eclipse 3.x"));
 		return list;
+	}
+
+	private Todo createTodo(String summary, String description, boolean done) {
+		return new Todo(current++, summary, description, done, new Date());
 	}
 
 	private Todo createTodo(String summary, String description) {
