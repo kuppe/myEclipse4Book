@@ -14,5 +14,33 @@
          </property>
       </product>
    </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="com.example.e4.rcp.todo.definition.doneTodos">
+         <with
+               variable="org.eclipse.ui.selection">
+            <iterate
+                  ifEmpty="false"
+                  operator="or">
+               <test
+                     forcePluginActivation="true"
+                     property="com.example.e4.rcp.todo.test.isDone"
+                     value="true">
+               </test>
+            </iterate>
+         </with>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="com.example.e4.rcp.todo.tester.TodoPropertyTester"
+            id="com.example.e4.rcp.todo.propertyTester.isDone"
+            namespace="com.example.e4.rcp.todo.test"
+            properties="isDone"
+            type="com.example.e4.rcp.todo.model.Todo">
+      </propertyTester>
+   </extension>
 
 </plugin>
