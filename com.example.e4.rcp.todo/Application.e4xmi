@@ -47,6 +47,9 @@
           <parameters xmi:id="_PjhPgKdWEeKtk46-qWrJLA" elementId="" name="com.example.e4.rcp.todo.commandparameter.test" value="MenuItem"/>
         </children>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="__X-2MKdvEeKcwJBz3-FaXA" elementId="com.example.e4.rcp.todo.menu.0" label="Misc">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_1AhvoKduEeKcwJBz3-FaXA" elementId="com.example.e4.rcp.todo.directmenuitem.0" label="Enter &amp;Credentials" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.EnterCredentialsHandler"/>
+      </children>
     </mainMenu>
     <trimBars xmi:id="_EKPPoKdBEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_F_VwEKdBEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.toolbar.0">
