@@ -2,13 +2,15 @@ package com.example.e4.rcp.todo.part;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
+import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -40,6 +42,7 @@ public class TodoOverview {
 	private Label label;
 	private TableViewer tv;
 	private Text text;
+	private WritableList withElementType;
 
 	private static class MyViewerFilter extends ViewerFilter {
 		private String filter;
@@ -71,10 +74,12 @@ public class TodoOverview {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				label.setText("Todos #" + model.getTodos().size());
-				tv.setInput(model.getTodos());
 
 				btnLoadData.setText("Model Loaded successfully");
 				parent.layout();
+
+				withElementType.clear();
+				withElementType.addAll(model.getTodos());
 			}
 		});
 		btnLoadData.setText("Load Data");
@@ -116,16 +121,9 @@ public class TodoOverview {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		tv.setContentProvider(ArrayContentProvider.getInstance());
 
 		// Summary
 		TableViewerColumn tvc = new TableViewerColumn(tv, SWT.NONE);
-		tvc.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				return ((Todo) element).getSummary();
-			}
-		});
 		tvc.getColumn().setText("Summary");
 		layout.setColumnData(tvc.getColumn(), new ColumnWeightData(40));
 		tvc.setEditingSupport(new EditingSupport(tv) {
@@ -158,15 +156,13 @@ public class TodoOverview {
 
 		// Description
 		TableViewerColumn tvc2 = new TableViewerColumn(tv, SWT.NONE);
-		tvc2.setLabelProvider(new ColumnLabelProvider() {
-
-			@Override
-			public String getText(Object element) {
-				return ((Todo) element).getDescription();
-			}
-		});
 		tvc2.getColumn().setText("Description");
 		layout.setColumnData(tvc2.getColumn(), new ColumnWeightData(60));
+
+		IValueProperty[] labelProperties = BeanProperties.values(new String[] {
+				Todo.SUMMARY, Todo.DESCRIPTION });
+		withElementType = WritableList.withElementType(Todo.class);
+		ViewerSupport.bind(tv, withElementType, labelProperties);
 
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override

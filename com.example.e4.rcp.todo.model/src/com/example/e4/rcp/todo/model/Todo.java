@@ -44,7 +44,7 @@ public class Todo {
 	}
 
 	public void setSummary(String summary) {
-		propertyChangeSupport.firePropertyChange("summary", this.summary,
+		propertyChangeSupport.firePropertyChange(SUMMARY, this.summary,
 				this.summary = summary);
 	}
 
@@ -53,7 +53,8 @@ public class Todo {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		propertyChangeSupport.firePropertyChange(DESCRIPTION, this.description,
+				this.description = description);
 	}
 
 	public boolean isDone() {
@@ -61,7 +62,8 @@ public class Todo {
 	}
 
 	public void setDone(boolean done) {
-		this.done = done;
+		propertyChangeSupport.firePropertyChange(DONE, this.done,
+				this.done = done);
 	}
 
 	public Date getDueDate() {
@@ -69,7 +71,8 @@ public class Todo {
 	}
 
 	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
+		propertyChangeSupport.firePropertyChange(DUEDATE, this.dueDate,
+				this.dueDate = dueDate);
 	}
 
 	public long getId() {
@@ -77,7 +80,7 @@ public class Todo {
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		propertyChangeSupport.firePropertyChange(ID, this.id, this.id = id);
 	}
 
 	@Override
