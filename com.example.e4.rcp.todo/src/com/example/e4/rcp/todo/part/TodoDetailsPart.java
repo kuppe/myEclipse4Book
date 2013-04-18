@@ -4,12 +4,18 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.ChangeEvent;
+import org.eclipse.core.databinding.observable.IChangeListener;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
@@ -29,6 +35,7 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
 public class TodoDetailsPart {
@@ -36,7 +43,12 @@ public class TodoDetailsPart {
 	private Text description;
 	private Button isDone;
 	private DateTime dateTime;
+
 	private Todo todo;
+
+	@Inject
+	private MDirtyable dirtyable;
+
 	private DataBindingContext dbc = new DataBindingContext();
 	private WritableValue source = WritableValue.withValueType(Todo.class);
 
@@ -121,13 +133,40 @@ public class TodoDetailsPart {
 		}
 	}
 
+	private final IChangeListener changeListener = new IChangeListener() {
+		@Override
+		public void handleChange(ChangeEvent event) {
+			if (dirtyable != null) {
+				dirtyable.setDirty(true);
+			}
+		}
+	};
+
 	private void updateUserInterface(Todo todo) {
 		if (this.summary != null && !this.summary.isDisposed()) {
 			if (todo == null) {
 				return;
 			}
+			IObservableList providers = dbc.getValidationStatusProviders();
+			for (Object object : providers) {
+				Binding b = (Binding) object;
+				b.getTarget().removeChangeListener(changeListener);
+			}
+
 			source.setValue(todo);
+
+			// register new dirtyable listener
+			for (Object object : providers) {
+				Binding b = (Binding) object;
+				b.getTarget().addChangeListener(changeListener);
+			}
 		}
+	}
+
+	@Persist
+	public void persist(ITodoService model) {
+		model.saveTodo(this.todo);
+		dirtyable.setDirty(false);
 	}
 
 	@Focus
