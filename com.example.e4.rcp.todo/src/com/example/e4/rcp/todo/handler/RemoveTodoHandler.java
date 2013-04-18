@@ -7,12 +7,14 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
+import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
 public class RemoveTodoHandler {
 	@Execute
-	public void execute() {
-		System.out.println("Soon we will really delete todos");
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) Todo todo,
+			ITodoService model) {
+		model.deleteTodo(todo.getId());
 	}
 
 	@CanExecute

@@ -10,6 +10,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -106,8 +107,9 @@ public class TodoOverview {
 		TableColumnLayout layout = new TableColumnLayout();
 		tableComposite.setLayout(layout);
 
-		tv = new TableViewer(tableComposite);
+		tv = new TableViewer(tableComposite, SWT.SINGLE);
 		Table table = tv.getTable();
+		tv = new TableViewer(table);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -139,7 +141,11 @@ public class TodoOverview {
 		tv.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				selectionService.setSelection(event.getSelection());
+				// Only send Todo instead of IStructuredSelection
+				// Table is SWT.SINGLE
+				IStructuredSelection selection = (IStructuredSelection) event
+						.getSelection();
+				selectionService.setSelection(selection.getFirstElement());
 			}
 		});
 

@@ -14,7 +14,6 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -94,14 +93,6 @@ public class TodoDetailsPart {
 		isDone = new Button(parent, SWT.CHECK);
 		isDone.setBounds(0, 0, 115, 24);
 		isDone.setText("Done");
-	}
-
-	@Inject
-	public void setTodo(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) IStructuredSelection iss) {
-		if (iss != null && iss.getFirstElement() instanceof Todo) {
-			setTodo((Todo) iss.getFirstElement());
-		}
 	}
 
 	@Inject
