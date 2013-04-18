@@ -9,6 +9,13 @@ public class Todo {
 	private Date dueDate;
 	private long id;
 
+	// Initializes with defaults
+	public Todo() {
+		this.summary = "";
+		this.description = "";
+		this.dueDate = new Date();
+	}
+
 	private Todo(Todo todo) {
 		this(todo.id, todo.summary, todo.description, todo.done, todo.dueDate);
 	}

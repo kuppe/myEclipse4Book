@@ -15,6 +15,8 @@ import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -45,6 +47,13 @@ public class TodoDetailsPart {
 		summary = new Text(parent, SWT.BORDER);
 		summary.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				1, 1));
+		summary.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Text t = (Text) e.getSource();
+				todo.setSummary(t.getText());
+			}
+		});
 
 		Image image = FieldDecorationRegistry.getDefault()
 				.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)

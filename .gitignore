@@ -1,4 +1,4 @@
 .metadata/
 External*
-*wizard*/
 bin/
+com.example.e4.rcp.wizard*
