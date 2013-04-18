@@ -1,12 +1,22 @@
 package com.example.e4.rcp.todo.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Date;
 
 public class Todo {
+	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(
+			this);
+
+	public static final String SUMMARY = "summary";
 	private String summary;
+	public static final String DESCRIPTION = "description";
 	private String description;
+	public static final String DONE = "done";
 	private boolean done;
+	public static final String DUEDATE = "dueDate";
 	private Date dueDate;
+	public static final String ID = "id";
 	private long id;
 
 	// Initializes with defaults
@@ -34,7 +44,8 @@ public class Todo {
 	}
 
 	public void setSummary(String summary) {
-		this.summary = summary;
+		propertyChangeSupport.firePropertyChange("summary", this.summary,
+				this.summary = summary);
 	}
 
 	public String getDescription() {
@@ -100,5 +111,13 @@ public class Todo {
 
 	public Todo copy() {
 		return new Todo(this);
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.removePropertyChangeListener(listener);
 	}
 }

@@ -7,13 +7,16 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
@@ -125,6 +128,33 @@ public class TodoOverview {
 		});
 		tvc.getColumn().setText("Summary");
 		layout.setColumnData(tvc.getColumn(), new ColumnWeightData(40));
+		tvc.setEditingSupport(new EditingSupport(tv) {
+			private TextCellEditor textCellEditor = new TextCellEditor(tv
+					.getTable());;
+
+			@Override
+			protected void setValue(Object element, Object value) {
+				Todo todo = (Todo) element;
+				todo.setSummary((String) value);
+				tv.refresh();
+			}
+
+			@Override
+			protected Object getValue(Object element) {
+				Todo todo = (Todo) element;
+				return todo.getSummary();
+			}
+
+			@Override
+			protected CellEditor getCellEditor(Object element) {
+				return textCellEditor;
+			}
+
+			@Override
+			protected boolean canEdit(Object element) {
+				return true;
+			}
+		});
 
 		// Description
 		TableViewerColumn tvc2 = new TableViewerColumn(tv, SWT.NONE);
