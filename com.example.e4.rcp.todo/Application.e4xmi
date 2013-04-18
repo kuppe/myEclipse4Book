@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_f5nnAKZgEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.application">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_vjA9wKZgEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.trimmedwindow.0" label="RCP e4 To-do" width="320" height="480">
+    <tags>OFFshellMaximized</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_sn1JkKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.perspectivestack.0" selectedElement="_s4I2cKZhEeK9w5jQC3nX6g">
       <children xsi:type="advanced:Perspective" xmi:id="_s4I2cKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.perspective.0" selectedElement="_tR3lEKZhEeK9w5jQC3nX6g">
         <children xsi:type="basic:PartSashContainer" xmi:id="_tR3lEKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partsashcontainer.0" selectedElement="_uph7kKZhEeK9w5jQC3nX6g" horizontal="true">
@@ -57,6 +58,7 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_J7CHkKdXEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.handledtoolitem.1" label="For &amp;Testing" command="_nUM7oKdEEeKtk46-qWrJLA">
           <parameters xmi:id="_7lPpkKddEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.parameter.0" name="com.example.e4.rcp.todo.commandparameter.test" value="ToolbarItem"/>
         </children>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_B8bfIKhQEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.directtoolitem.0" label="&amp;PartSashResize" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.PartSashResizeHandler"/>
       </children>
     </trimBars>
   </children>
