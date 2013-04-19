@@ -10,9 +10,15 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UISynchronize;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
@@ -73,7 +79,8 @@ public class TodoOverview {
 	@PostConstruct
 	public void createPart(final Composite parent, final ITodoService model,
 			EMenuService menuService, final ESelectionService selectionService,
-			final UISynchronize sync) {
+			final UISynchronize sync, final EModelService modelService,
+			final MApplication application) {
 		GridLayout gl_parent = new GridLayout(2, false);
 		gl_parent.horizontalSpacing = 10;
 		parent.setLayout(gl_parent);
@@ -84,10 +91,13 @@ public class TodoOverview {
 			public void widgetSelected(SelectionEvent e) {
 				Job job = new Job("Model loader...") {
 					@Override
-					protected IStatus run(IProgressMonitor monitor) {
+					protected IStatus run(final IProgressMonitor monitor) {
+						monitor.beginTask("Starting to load model", 5);
 						final List<Todo> todos = model.getTodos();
+						monitor.worked(1);
 						final int size = todos.size();
-						sync.asyncExec(new Runnable() {
+						monitor.worked(1);
+						sync.syncExec(new Runnable() {
 							@Override
 							public void run() {
 								label.setText("Todos #" + size);
@@ -96,13 +106,34 @@ public class TodoOverview {
 										.setText("Model Loaded successfully");
 								parent.layout();
 
+								monitor.worked(1);
 								withElementType.clear();
+								monitor.worked(1);
 								withElementType.addAll(todos);
+								monitor.worked(1);
 							}
 						});
+						monitor.done();
 						return Status.OK_STATUS;
 					}
 				};
+
+				// Link progress to ProgressBarToolItem
+				IJobManager jobManager = Job.getJobManager();
+				jobManager.setProgressProvider(new ProgressProvider() {
+
+					@Override
+					public IProgressMonitor createMonitor(Job job) {
+						MUIElement find = modelService.find(
+								"com.example.e4.rcp.todo.toolcontrol.0",
+								application);
+						MToolControl control = (MToolControl) find;
+						IProgressMonitor progressMonitor = (IProgressMonitor) control
+								.getObject();
+						return progressMonitor;
+					}
+				});
+
 				job.schedule();
 			}
 		});

@@ -70,6 +70,11 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_e4Tw4KhWEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.directtoolitem.1" label="&amp;Dynamic Part" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.DynamicPartHandler"/>
       </children>
     </trimBars>
+    <trimBars xmi:id="_v7JUcKjSEeKHwK37tQ5lXw" elementId="com.example.e4.rcp.todo.trimbar.1" side="Bottom">
+      <children xsi:type="menu:ToolBar" xmi:id="_21mlIKjSEeKHwK37tQ5lXw" elementId="com.example.e4.rcp.todo.toolbar.1">
+        <children xsi:type="menu:ToolControl" xmi:id="_seY5sKjSEeKHwK37tQ5lXw" elementId="com.example.e4.rcp.todo.toolcontrol.0" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.progress.ProgressBarToolItem"/>
+      </children>
+    </trimBars>
   </children>
   <handlers xmi:id="_l3RyAKdBEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.handler.save" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.SaveAllHandler" command="_KQhRYKdBEeKtk46-qWrJLA"/>
   <handlers xmi:id="_Mt2aAKdCEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.handler.exit" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.ExitHandler" command="_KMHdEKdCEeKtk46-qWrJLA"/>
