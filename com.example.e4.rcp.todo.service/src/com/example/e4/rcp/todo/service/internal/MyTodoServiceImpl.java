@@ -5,8 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.osgi.service.log.LogService;
 
+import com.example.e4.rcp.todo.events.MyEventConstants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
@@ -14,9 +18,18 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	static int current = 1;
 	private List<Todo> model;
+	@Inject
 	private LogService logService;
 
+	private IEventBroker broker;
+
 	public MyTodoServiceImpl() {
+		this(new DummyEventBroker());
+	}
+
+	@Inject
+	public MyTodoServiceImpl(IEventBroker broker) {
+		this.broker = broker;
 		model = createInitialModel();
 	}
 
@@ -55,6 +68,7 @@ public class MyTodoServiceImpl implements ITodoService {
 		} else {
 			newTodo.setId(current++);
 			model.add(newTodo);
+			broker.post(MyEventConstants.TOPIC_TODO_NEW, newTodo);
 		}
 
 		return true;
@@ -84,6 +98,7 @@ public class MyTodoServiceImpl implements ITodoService {
 		}
 		if (deleteTodo != null) {
 			model.remove(deleteTodo);
+			broker.post(MyEventConstants.TOPIC_TODO_DELETE, deleteTodo);
 			return true;
 		}
 		return false;
@@ -100,6 +115,9 @@ public class MyTodoServiceImpl implements ITodoService {
 		list.add(createTodo("CSS Styling",
 				"Learn how to style your application"));
 		list.add(createTodo("Compatibility Layer", "Run Eclipse 3.x"));
+
+		broker.post(MyEventConstants.TOPIC_TODO_NEW, "InitialModelCreated");
+
 		return list;
 	}
 
