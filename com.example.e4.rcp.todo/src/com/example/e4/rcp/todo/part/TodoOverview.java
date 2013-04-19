@@ -1,11 +1,18 @@
 package com.example.e4.rcp.todo.part;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
@@ -37,6 +44,7 @@ import org.eclipse.swt.widgets.Text;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
+@SuppressWarnings("restriction")
 public class TodoOverview {
 
 	private Label label;
@@ -64,7 +72,8 @@ public class TodoOverview {
 
 	@PostConstruct
 	public void createPart(final Composite parent, final ITodoService model,
-			EMenuService menuService, final ESelectionService selectionService) {
+			EMenuService menuService, final ESelectionService selectionService,
+			final UISynchronize sync) {
 		GridLayout gl_parent = new GridLayout(2, false);
 		gl_parent.horizontalSpacing = 10;
 		parent.setLayout(gl_parent);
@@ -73,13 +82,28 @@ public class TodoOverview {
 		btnLoadData.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				label.setText("Todos #" + model.getTodos().size());
+				Job job = new Job("Model loader...") {
+					@Override
+					protected IStatus run(IProgressMonitor monitor) {
+						final List<Todo> todos = model.getTodos();
+						final int size = todos.size();
+						sync.asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								label.setText("Todos #" + size);
 
-				btnLoadData.setText("Model Loaded successfully");
-				parent.layout();
+								btnLoadData
+										.setText("Model Loaded successfully");
+								parent.layout();
 
-				withElementType.clear();
-				withElementType.addAll(model.getTodos());
+								withElementType.clear();
+								withElementType.addAll(todos);
+							}
+						});
+						return Status.OK_STATUS;
+					}
+				};
+				job.schedule();
 			}
 		});
 		btnLoadData.setText("Load Data");

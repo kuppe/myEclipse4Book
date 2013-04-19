@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.log.LogService;
 
@@ -26,7 +27,14 @@ public class MyTodoServiceImpl implements ITodoService {
 		if (logService != null) {
 			logService.log(LogService.LOG_DEBUG, "MyTodoServiceImpl.getTodos()");
 		}
-		ArrayList<Todo> list = new ArrayList<Todo>();
+		// Simulate long running backend call
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		List<Todo> list = new ArrayList<Todo>();
 		for (Todo todo : model) {
 			list.add(todo.copy());
 		}
