@@ -10,14 +10,10 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
@@ -117,23 +113,6 @@ public class TodoOverview {
 						return Status.OK_STATUS;
 					}
 				};
-
-				// Link progress to ProgressBarToolItem
-				IJobManager jobManager = Job.getJobManager();
-				jobManager.setProgressProvider(new ProgressProvider() {
-
-					@Override
-					public IProgressMonitor createMonitor(Job job) {
-						MUIElement find = modelService.find(
-								"com.example.e4.rcp.todo.toolcontrol.0",
-								application);
-						MToolControl control = (MToolControl) find;
-						IProgressMonitor progressMonitor = (IProgressMonitor) control
-								.getObject();
-						return progressMonitor;
-					}
-				});
-
 				job.schedule();
 			}
 		});
