@@ -3,11 +3,12 @@ package com.example.e4.rcp.todo.service.internal;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.ui.model.application.MApplication;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import com.example.e4.rcp.todo.model.ITodoService;
 
-@SuppressWarnings("restriction")
 public class TodoServiceContextFunction extends ContextFunction {
 
 	@Override
@@ -15,10 +16,10 @@ public class TodoServiceContextFunction extends ContextFunction {
 		MyTodoServiceImpl service = ContextInjectionFactory.make(
 				MyTodoServiceImpl.class, context);
 
-		// put into app context
-		MApplication application = context.get(MApplication.class);
-		IEclipseContext ctx = application.getContext();
-		ctx.set(ITodoService.class, service);
+		// Register as OSGi service
+		Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+		BundleContext bundleContext = bundle.getBundleContext();
+		bundleContext.registerService(ITodoService.class, service, null);
 
 		return service;
 	}
