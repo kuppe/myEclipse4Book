@@ -17,8 +17,8 @@
          	value="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.lifecycle.LifeCycleManager">
          </property>
          <property
-               name="applicationCSS"
-               value="platform:/plugin/com.example.e4.rcp.todo/css/default.css">
+               name="cssTheme"
+               value="com.example.e4.rcp.todo.theme.dark">
          </property>
       </product>
    </extension>
@@ -49,6 +49,20 @@
             properties="isDone"
             type="com.example.e4.rcp.todo.model.Todo">
       </propertyTester>
+   </extension>
+   <extension
+         id="red"
+         point="org.eclipse.e4.ui.css.swt.theme">
+      <theme
+            basestylesheeturi="css/dark-gradient.css"
+            id="com.example.e4.rcp.todo.theme.dark"
+            label="Dark Theme">
+      </theme>
+      <theme
+            basestylesheeturi="css/red.css"
+            id="com.example.e4.rcp.todo.theme.red"
+            label="Red Theme">
+      </theme>
    </extension>
 
 </plugin>

@@ -63,6 +63,7 @@
         </children>
         <children xsi:type="menu:DirectToolItem" xmi:id="_B8bfIKhQEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.directtoolitem.0" label="&amp;PartSashResize" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.PartSashResizeHandler"/>
         <children xsi:type="menu:DirectToolItem" xmi:id="_e4Tw4KhWEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.directtoolitem.1" label="&amp;Dynamic Part" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.DynamicPartHandler"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_ZtX6kKmqEeKol8QB77w-vA" elementId="com.example.e4.rcp.todo.directtoolitem.themeSwitch" label="Switch &amp;Theme" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.SwitchThemeHandler"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_v7JUcKjSEeKHwK37tQ5lXw" elementId="com.example.e4.rcp.todo.trimbar.1" side="Bottom">
