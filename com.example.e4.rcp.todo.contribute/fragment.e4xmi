@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_PM3CEKkOEeKe3ed8WrDKZA">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UQAy4KkOEeKe3ed8WrDKZA" featurename="command" parentElementId="com.example.e4.rcp.todo.application">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UQAy4KkOEeKe3ed8WrDKZA" featurename="commands" parentElementId="com.example.e4.rcp.todo.application">
     <elements xsi:type="commands:Command" xmi:id="_mwahEKkQEeKe3ed8WrDKZA" elementId="com.example.e4.rcp.todo.contribute.command.0" commandName="OpenMap"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_iKMmEKkfEeKe3ed8WrDKZA" featurename="children" parentElementId="org.eclipse.ui.file.menu" positionInList="first">

@@ -7,5 +7,12 @@
       <fragment
             uri="fragment.e4xmi">
       </fragment>
+      <processor
+            beforefragment="false"
+            class="com.example.e4.rcp.todo.contribute.ModelProcessor">
+         <element
+               id="org.eclipse.ui.file.menu">
+         </element>
+      </processor>
    </extension>
 </plugin>
