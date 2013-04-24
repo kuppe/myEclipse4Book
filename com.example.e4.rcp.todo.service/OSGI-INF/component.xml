@@ -4,4 +4,5 @@
    <service>
       <provide interface="com.example.e4.rcp.todo.model.ITodoService"/>
    </service>
+   <reference bind="setLogService" cardinality="1..1" interface="org.osgi.service.log.LogService" name="LogService" policy="static"/>
 </scr:component>

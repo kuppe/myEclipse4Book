@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Service
-Bundle-SymbolicName: com.example.e4.rcp.todo.service
+Bundle-Name: Log
+Bundle-SymbolicName: com.example.e4.rcp.todo.log
 Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: vogella GmbH
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: com.example.e4.rcp.todo.model;bundle-version="1.0.0"
 Service-Component: OSGI-INF/component.xml
+Import-Package: org.osgi.framework;version="1.7.0",
+ org.osgi.service.log;version="1.3.0"
 Bundle-ActivationPolicy: lazy
-Import-Package: org.osgi.service.log;version="1.3.0"

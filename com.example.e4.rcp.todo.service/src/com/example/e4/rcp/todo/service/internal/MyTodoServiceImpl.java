@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.log.LogService;
+
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
@@ -11,6 +13,7 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	static int current = 1;
 	private List<Todo> model;
+	private LogService logService;
 
 	public MyTodoServiceImpl() {
 		model = createInitialModel();
@@ -19,6 +22,9 @@ public class MyTodoServiceImpl implements ITodoService {
 	// Always return a new copy of the data
 	@Override
 	public List<Todo> getTodos() {
+		if (logService != null) {
+			logService.log(LogService.LOG_DEBUG, "MyTodoServiceImpl.getTodos()");
+		}
 		ArrayList<Todo> list = new ArrayList<Todo>();
 		for (Todo todo : model) {
 			list.add(todo.copy());
@@ -29,6 +35,10 @@ public class MyTodoServiceImpl implements ITodoService {
 	// Saves or updates
 	@Override
 	public synchronized boolean saveTodo(Todo newTodo) {
+		if (logService != null) {
+			logService.log(LogService.LOG_DEBUG,
+					"MyTodoServiceImpl.saveTodo(Todo)");
+		}
 		Todo updateTodo = null;
 		for (Todo todo : model) {
 			if (todo.getId() == newTodo.getId()) {
@@ -60,6 +70,10 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	@Override
 	public boolean deleteTodo(long id) {
+		if (logService != null) {
+			logService.log(LogService.LOG_DEBUG,
+					"MyTodoServiceImpl.deleteTodo(long)");
+		}
 		Todo deleteTodo = null;
 		for (Todo todo : model) {
 			if (id == todo.getId()) {
@@ -89,5 +103,9 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	private Todo createTodo(String summary, String description) {
 		return new Todo(current++, summary, description, false, new Date());
+	}
+
+	public void setLogService(LogService logService) {
+		this.logService = logService;
 	}
 }
