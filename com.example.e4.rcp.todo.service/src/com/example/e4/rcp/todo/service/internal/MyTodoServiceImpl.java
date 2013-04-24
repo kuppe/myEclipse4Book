@@ -3,6 +3,7 @@ package com.example.e4.rcp.todo.service.internal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.osgi.service.log.LogService;
 
@@ -107,5 +108,16 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	public void setLogService(LogService logService) {
 		this.logService = logService;
+	}
+
+	@Override
+	public double[] getStatistics() {
+		// Some random data mocking done todos per month (12 month)
+		double[] d = new double[12];
+		Random rnd = new Random();
+		for (int i = 0; i < 12; i++) {
+			d[i] = rnd.nextInt(10);
+		}
+		return d;
 	}
 }

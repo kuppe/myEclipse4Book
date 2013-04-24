@@ -10,4 +10,6 @@ public interface ITodoService {
 	Todo getTodo(long id);
 
 	boolean deleteTodo(long id);
+
+	double[] getStatistics();
 }
