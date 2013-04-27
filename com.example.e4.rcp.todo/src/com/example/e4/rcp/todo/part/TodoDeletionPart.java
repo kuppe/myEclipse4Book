@@ -9,7 +9,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -26,6 +28,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
+import com.example.e4.rcp.todo.events.MyEventConstants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
@@ -99,6 +102,20 @@ public class TodoDeletionPart {
 				super.widgetSelected(e);
 			}
 		});
+	}
+
+	@Inject
+	@Optional
+	public void newTodoCreated(
+			@UIEventTopic(MyEventConstants.TOPIC_TODO_NEW) Todo todo) {
+		comboViewer.add(todo);
+	}
+
+	@Inject
+	@Optional
+	public void todoDeleted(
+			@UIEventTopic(MyEventConstants.TOPIC_TODO_DELETE) Todo todo) {
+		comboViewer.remove(todo);
 	}
 
 	@Focus

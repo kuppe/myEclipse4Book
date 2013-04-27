@@ -3,6 +3,7 @@ package com.example.e4.rcp.todo.part;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
@@ -11,7 +12,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -43,6 +46,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
+import com.example.e4.rcp.todo.events.MyEventConstants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
@@ -211,6 +215,20 @@ public class TodoOverview {
 
 		menuService.registerContextMenu(tv.getTable(),
 				"com.example.e4.rcp.todo.popupmenu.table");
+	}
+
+	@Inject
+	@Optional
+	public void newTodoCreated(
+			@UIEventTopic(MyEventConstants.TOPIC_TODO_NEW) Todo todo) {
+		withElementType.add(todo);
+	}
+
+	@Inject
+	@Optional
+	public void todoDeleted(
+			@UIEventTopic(MyEventConstants.TOPIC_TODO_DELETE) Todo todo) {
+		withElementType.remove(todo);
 	}
 
 	@Focus
