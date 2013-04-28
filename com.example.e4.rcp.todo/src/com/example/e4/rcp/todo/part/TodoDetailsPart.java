@@ -71,7 +71,7 @@ public class TodoDetailsPart {
 
 		// Summary
 		Label lblSummary = new Label(parent, SWT.NONE);
-		lblSummary.setText("Summary");
+		lblSummary.setText(Messages.TodoDetailsPart_lblSummary_text);
 		summary = new Text(parent, SWT.BORDER);
 		summary.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
 				1, 1));
@@ -90,7 +90,7 @@ public class TodoDetailsPart {
 				SWT.RIGHT | SWT.TOP);
 		controlDecoration.setShowOnlyOnFocus(true);
 		controlDecoration
-				.setDescriptionText("Use CTRL+SPACE to see possible values");
+				.setDescriptionText(Messages.TodoDetailsPart_controlDecoration_descriptionText);
 		controlDecoration.setImage(image);
 
 		try {
@@ -104,7 +104,7 @@ public class TodoDetailsPart {
 
 		// Description
 		Label lblDescription = new Label(parent, SWT.NONE);
-		lblDescription.setText("Description");
+		lblDescription.setText(Messages.TodoDetailsPart_lblDescription_text);
 		description = new Text(parent, SWT.BORDER | SWT.MULTI);
 		description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
@@ -114,7 +114,7 @@ public class TodoDetailsPart {
 		dbc.bindValue(ui, model, new UpdateValueStrategy(updatePolicy), null);
 
 		Label lblDueDate = new Label(parent, SWT.NONE);
-		lblDueDate.setText("Due Date");
+		lblDueDate.setText(Messages.TodoDetailsPart_lblDueDate_text);
 
 		// datetime
 		dateTime = new DateTime(parent, SWT.BORDER);
@@ -128,11 +128,12 @@ public class TodoDetailsPart {
 		// done
 		isDone = new Button(parent, SWT.CHECK);
 		isDone.setBounds(0, 0, 115, 24);
-		isDone.setText("Done");
+		isDone.setText(Messages.TodoDetailsPart_isDone_text);
 		// done <> model
 		model = BeanProperties.value(Todo.DONE).observeDetail(source);
 		ui = WidgetProperties.selection().observe(this.isDone);
 		dbc.bindValue(ui, model, new UpdateValueStrategy(updatePolicy), null);
+		new Label(parent, SWT.NONE);
 	}
 
 	@Inject

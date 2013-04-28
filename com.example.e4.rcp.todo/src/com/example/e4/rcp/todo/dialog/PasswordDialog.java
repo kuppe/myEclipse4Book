@@ -56,7 +56,7 @@ public class PasswordDialog extends Dialog {
 		Label lblNewLabel = new Label(container, SWT.NONE);
 		lblNewLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
-		lblNewLabel.setText("Username");
+		lblNewLabel.setText(Messages.PasswordDialog_username);
 
 		usernameText = new Text(container, SWT.BORDER);
 		usernameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
@@ -70,7 +70,7 @@ public class PasswordDialog extends Dialog {
 		Label lblPassword = new Label(container, SWT.NONE);
 		lblPassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
-		lblPassword.setText("Password");
+		lblPassword.setText(Messages.PasswordDialog_password);
 
 		passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD);
 		passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
@@ -85,8 +85,8 @@ public class PasswordDialog extends Dialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, "OK", true);
-		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+		createButton(parent, IDialogConstants.OK_ID, Messages.PasswordDialog_ok, true);
+		createButton(parent, IDialogConstants.CANCEL_ID, Messages.PasswordDialog_cancel, false);
 	}
 
 	@Override

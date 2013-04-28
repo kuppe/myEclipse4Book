@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.example.e4.rcp.todo.i18n.de Fragment
+Bundle-SymbolicName: com.example.e4.rcp.todo.i18n.de
+Bundle-Version: 1.0.0
+Fragment-Host: com.example.e4.rcp.todo;bundle-version="[1.0.0,1.1.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

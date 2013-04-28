@@ -33,6 +33,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -100,10 +101,12 @@ public class TodoOverview {
 						sync.syncExec(new Runnable() {
 							@Override
 							public void run() {
-								label.setText("Todos #" + size);
+								label.setText(NLS
+										.bind(Messages.TodoOverview_btnLoadedData_text,
+												size));
 
 								btnLoadData
-										.setText("Model Loaded successfully");
+										.setText(Messages.TodoOverview_btnSuccessLoadData_text);
 								parent.layout();
 
 								monitor.worked(1);
@@ -120,11 +123,11 @@ public class TodoOverview {
 				job.schedule();
 			}
 		});
-		btnLoadData.setText("Load Data");
+		btnLoadData.setText(Messages.TodoOverview_btnLoadData_text);
 		label = new Label(parent, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1,
 				1));
-		label.setText("Todos not yet loaded");
+		label.setText(Messages.TodoOverview_label_text);
 
 		text = new Text(parent, SWT.BORDER | SWT.H_SCROLL | SWT.SEARCH
 				| SWT.ICON_SEARCH | SWT.CANCEL);
@@ -162,7 +165,7 @@ public class TodoOverview {
 
 		// Summary
 		TableViewerColumn tvc = new TableViewerColumn(tv, SWT.NONE);
-		tvc.getColumn().setText("Summary");
+		tvc.getColumn().setText(Messages.TodoOverview_other_text);
 		layout.setColumnData(tvc.getColumn(), new ColumnWeightData(40));
 		tvc.setEditingSupport(new EditingSupport(tv) {
 			private TextCellEditor textCellEditor = new TextCellEditor(tv
@@ -194,7 +197,7 @@ public class TodoOverview {
 
 		// Description
 		TableViewerColumn tvc2 = new TableViewerColumn(tv, SWT.NONE);
-		tvc2.getColumn().setText("Description");
+		tvc2.getColumn().setText(Messages.TodoOverview_other_text_1);
 		layout.setColumnData(tvc2.getColumn(), new ColumnWeightData(60));
 
 		IValueProperty[] labelProperties = BeanProperties.values(new String[] {
