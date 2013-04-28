@@ -57,6 +57,7 @@
     <sharedElements xsi:type="basic:Part" xmi:id="_74itQKhTEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.part.0" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.LazyTable" label="SharedPart"/>
     <trimBars xmi:id="_EKPPoKdBEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.trimbar.0">
       <children xsi:type="menu:ToolBar" xmi:id="_F_VwEKdBEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.toolbar.0">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_GKEmoK_XEeKLOqkar42Y4Q" elementId="com.example.e4.rcp.todo.directtoolitem.2" label="New &amp;SomePoorClass" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.NewSomePoorClassHandler"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_JxFjYKdBEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.handledtoolitem.0" label="&amp;Save" command="_KQhRYKdBEeKtk46-qWrJLA"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_J7CHkKdXEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.handledtoolitem.1" label="For &amp;Testing" command="_nUM7oKdEEeKtk46-qWrJLA">
           <parameters xmi:id="_7lPpkKddEeKtk46-qWrJLA" elementId="com.example.e4.rcp.todo.parameter.0" name="com.example.e4.rcp.todo.commandparameter.test" value="ToolbarItem"/>

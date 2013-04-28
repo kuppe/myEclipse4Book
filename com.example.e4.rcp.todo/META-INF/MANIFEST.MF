@@ -21,8 +21,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
  org.eclipse.core.databinding;bundle-version="1.4.1",
  org.eclipse.core.databinding.beans;bundle-version="1.2.200",
  org.eclipse.core.databinding.observable;bundle-version="1.4.1",
- org.eclipse.core.databinding.property;bundle-version="1.4.200",
- com.example.e4.rcp.todo.events
+ org.eclipse.core.databinding.property;bundle-version="1.4.200"
 Import-Package: com.example.e4.rcp.todo.events,
  javax.annotation;version="1.0.0",
  javax.inject;version="1.0.0",
