@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com.example.e4.rcp.todo.lifecycleHook">
+      <client
+            class="com.example.e4.rcp.todo.extension.MyLifeCycleManager">
+      </client>
+   </extension>
+</plugin>

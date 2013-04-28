@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="com.example.e4.rcp.todo.lifecycleHook" name="Lifecycle Hook" schema="schema/com.example.e4.rcp.todo.lifecycleHook.exsd"/>
 
    <extension
          id="product"
