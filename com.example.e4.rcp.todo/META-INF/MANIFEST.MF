@@ -31,5 +31,6 @@ Import-Package: com.example.e4.rcp.todo.events,
  org.eclipse.e4.core.services.translation,
  org.eclipse.e4.ui.css.swt.theme,
  org.eclipse.e4.ui.model.application,
- org.eclipse.e4.ui.model.application.ui.basic
+ org.eclipse.e4.ui.model.application.ui.basic,
+ org.eclipse.e4.ui.workbench.renderers.swt
 Export-Package: com.example.e4.rcp.todo.lifecycle

@@ -14,6 +14,7 @@
               </children>
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_WE0N0KacEeK4esptrifP3g" elementId="com.example.e4.rcp.todo.partstack.3" containerData="30">
+              <tags>StackBottom</tags>
               <children xsi:type="basic:Part" xmi:id="_WbLfYKacEeK4esptrifP3g" elementId="com.example.e4.rcp.todo.part.delete" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.TodoDeletionPart" label="Delete Todos"/>
             </children>
           </children>
@@ -22,6 +23,7 @@
               <children xsi:type="basic:Part" xmi:id="_vg62kKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.part.tododetails" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.TodoDetailsPart" label="TodoDetails"/>
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_vOY8IKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partstack.2">
+              <tags>StackBottom</tags>
               <children xsi:type="basic:Part" xmi:id="_v5DCsKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.part.playground" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.PlaygroundPart" label="Playground"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_SUGUUKhUEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.placeholder.1" ref="_74itQKhTEeKrqYJigy0p1w"/>
             </children>
