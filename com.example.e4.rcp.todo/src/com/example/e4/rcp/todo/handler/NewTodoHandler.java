@@ -14,15 +14,13 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
+import com.example.e4.rcp.todo.model.UniqueTodo;
 import com.example.e4.rcp.todo.wizard.TodoWizard;
 
-@SuppressWarnings("restriction")
 public class NewTodoHandler {
 	@Execute
 	public void execute(Shell shell, final ITodoService model,
-			MApplication application) {
-
-		final Todo todo = new Todo();
+			MApplication application, @UniqueTodo final Todo todo) {
 
 		IEclipseContext context = application.getContext();
 		IEclipseContext childContext = context.createChild();
