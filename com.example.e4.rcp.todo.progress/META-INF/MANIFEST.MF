@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Progress
+Bundle-SymbolicName: com.example.e4.rcp.todo.progress;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: vogella GmbH
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: javax.annotation;version="1.0.0",
+ javax.inject;version="1.0.0",
+ org.eclipse.core.runtime;version="3.4.0",
+ org.eclipse.core.runtime.jobs,
+ org.eclipse.e4.ui.di,
+ org.eclipse.e4.ui.model.application,
+ org.eclipse.e4.ui.model.application.ui,
+ org.eclipse.e4.ui.model.application.ui.menu,
+ org.eclipse.e4.ui.workbench.modeling,
+ org.eclipse.swt,
+ org.eclipse.swt.widgets
+Bundle-ActivationPolicy: lazy
