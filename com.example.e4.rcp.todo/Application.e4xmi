@@ -23,11 +23,6 @@
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_vOY8IKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.partstack.2">
               <children xsi:type="basic:Part" xmi:id="_v5DCsKZhEeK9w5jQC3nX6g" elementId="com.example.e4.rcp.todo.part.playground" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.PlaygroundPart" label="Playground"/>
-              <children xsi:type="basic:Part" xmi:id="_cF5CgK0KEeK4VqdmQ7mTGw" elementId="com.example.e4.rcp.todo.part.0" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.ChartPart" label="Charts">
-                <toolbar xmi:id="_jstmkK9SEeKrrYcHS7S2IQ" elementId="com.example.e4.rcp.todo.toolbar.0">
-                  <children xsi:type="menu:DirectToolItem" xmi:id="_kIim8K9SEeKrrYcHS7S2IQ" elementId="com.example.e4.rcp.todo.directtoolitem.0" label="Toggle &amp;Update" iconURI="platform:/plugin/com.example.e4.rcp.todo/icons/quick_restart.png" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.ToggleChartUpdateHandler"/>
-                </toolbar>
-              </children>
               <children xsi:type="advanced:Placeholder" xmi:id="_SUGUUKhUEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.placeholder.1" ref="_74itQKhTEeKrqYJigy0p1w"/>
             </children>
           </children>
