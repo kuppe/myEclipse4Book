@@ -55,6 +55,7 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_1AhvoKduEeKcwJBz3-FaXA" elementId="com.example.e4.rcp.todo.directmenuitem.0" label="Enter &amp;Credentials" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.EnterCredentialsHandler"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_rfzkQKhTEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.handledmenuitem.6" label="Switch Perspective" command="_R5FBsKhTEeKrqYJigy0p1w"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_jziJ8DQdEeODSvn-p-CzAw" elementId="com.example.e4.rcp.todo.directmenuitem.1" label="&amp;FullScreen" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.FullScreen"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_8QIbsDQdEeODSvn-p-CzAw" elementId="com.example.e4.rcp.todo.directmenuitem.2" label="Remove &amp;this Item" tooltip="Removes this MenuItem from the Menu" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handler.RemoveMenuItem"/>
       </children>
     </mainMenu>
     <sharedElements xsi:type="basic:Part" xmi:id="_74itQKhTEeKrqYJigy0p1w" elementId="com.example.e4.rcp.todo.part.0" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.part.LazyTable" label="SharedPart"/>
