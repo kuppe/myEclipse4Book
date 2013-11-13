@@ -6,6 +6,7 @@ import javax.inject.Named;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.ChangeEvent;
 import org.eclipse.core.databinding.observable.IChangeListener;
@@ -51,6 +52,16 @@ public class TodoDetailsPart {
 
 	private DataBindingContext dbc = new DataBindingContext();
 	private WritableValue source = WritableValue.withValueType(Todo.class);
+	private final int updatePolicy;
+	
+	@Inject
+	public TodoDetailsPart() {
+		this(UpdateValueStrategy.POLICY_ON_REQUEST);
+	}
+
+	public TodoDetailsPart(int updatePolicy) {
+		this.updatePolicy = updatePolicy;
+	}
 
 	@PostConstruct
 	public void createPartControl(Composite parent) {
@@ -69,7 +80,7 @@ public class TodoDetailsPart {
 				.observeDetail(source);
 		IObservableValue ui = WidgetProperties.text(SWT.Modify).observe(
 				this.summary);
-		dbc.bindValue(ui, model);
+		dbc.bindValue(ui, model, new UpdateValueStrategy(updatePolicy), null);
 
 		Image image = FieldDecorationRegistry.getDefault()
 				.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
@@ -100,7 +111,7 @@ public class TodoDetailsPart {
 		// description <> model
 		model = BeanProperties.value(Todo.DESCRIPTION).observeDetail(source);
 		ui = WidgetProperties.text(SWT.Modify).observe(this.description);
-		dbc.bindValue(ui, model);
+		dbc.bindValue(ui, model, new UpdateValueStrategy(updatePolicy), null);
 
 		Label lblDueDate = new Label(parent, SWT.NONE);
 		lblDueDate.setText("Due Date");
@@ -112,7 +123,7 @@ public class TodoDetailsPart {
 		// dateTime <> model
 		model = BeanProperties.value(Todo.DUEDATE).observeDetail(source);
 		ui = WidgetProperties.selection().observe(this.dateTime);
-		dbc.bindValue(ui, model);
+		dbc.bindValue(ui, model, new UpdateValueStrategy(updatePolicy), null);
 
 		// done
 		isDone = new Button(parent, SWT.CHECK);
@@ -121,7 +132,7 @@ public class TodoDetailsPart {
 		// done <> model
 		model = BeanProperties.value(Todo.DONE).observeDetail(source);
 		ui = WidgetProperties.selection().observe(this.isDone);
-		dbc.bindValue(ui, model);
+		dbc.bindValue(ui, model, new UpdateValueStrategy(updatePolicy), null);
 	}
 
 	@Inject
@@ -165,6 +176,10 @@ public class TodoDetailsPart {
 
 	@Persist
 	public void persist(ITodoService model) {
+		// Explicitly sync the SWT ui to the model. This is necessary because
+		// the bindings use the ON_REQUEST policy for the UpdateValueStrategy.
+		dbc.updateModels();
+		
 		model.saveTodo(this.todo);
 		dirtyable.setDirty(false);
 	}

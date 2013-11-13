@@ -1,5 +1,6 @@
 package com.example.e4.rcp.todo.wizard;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -22,7 +23,7 @@ public class TodoWizardPage extends WizardPage {
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
 
-		TodoDetailsPart tdp = new TodoDetailsPart();
+		TodoDetailsPart tdp = new TodoDetailsPart(UpdateValueStrategy.POLICY_UPDATE);
 		tdp.createPartControl(comp);
 		tdp.setTodo(this.todo);
 
