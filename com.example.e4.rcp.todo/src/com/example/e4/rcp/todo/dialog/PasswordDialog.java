@@ -3,12 +3,18 @@ package com.example.e4.rcp.todo.dialog;
 import javax.inject.Inject;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.extensions.Preference;
+import org.eclipse.e4.core.services.nls.Translation;
+import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -42,8 +48,20 @@ public class PasswordDialog extends Dialog {
 	private IEclipsePreferences preferences;
 	
 	@Inject
-	public PasswordDialog(Shell shell) {
+	@Translation
+	private Messages messages;
+	
+	private IEclipseContext ctx;
+
+	private Label lblPassword;
+	private Label lblNewLabel;
+	
+	private Combo combo;
+	
+	@Inject
+	public PasswordDialog(Shell shell, IEclipseContext ctx) {
 		super(shell);
+		this.ctx = ctx;
 	}
 
 	@Override
@@ -53,10 +71,9 @@ public class PasswordDialog extends Dialog {
 		GridLayout gridLayout = new GridLayout(2, false);
 		container.setLayout(gridLayout);
 
-		Label lblNewLabel = new Label(container, SWT.NONE);
+		lblNewLabel = new Label(container, SWT.NONE);
 		lblNewLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
-		lblNewLabel.setText(Messages.PasswordDialog_username);
 
 		usernameText = new Text(container, SWT.BORDER);
 		usernameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
@@ -67,26 +84,55 @@ public class PasswordDialog extends Dialog {
 			usernameText.setText(username);
 		}
 
-		Label lblPassword = new Label(container, SWT.NONE);
+		lblPassword = new Label(container, SWT.NONE);
 		lblPassword.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
 				false, 1, 1));
-		lblPassword.setText(Messages.PasswordDialog_password);
 
 		passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD);
 		passwordText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
+		new Label(container, SWT.NONE);
+		
+		combo = new Combo(container, SWT.NONE);
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		combo.setItems(new String[] {"en_US", "de_DE"});
+		combo.addSelectionListener(new SelectionAdapter() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ctx.set(TranslationService.LOCALE,
+						combo.getItem(combo.getSelectionIndex()));
+			}
+		});
+		combo.select(0);
+		
 		// see username
 		if (password != null) {
 			passwordText.setText(password);
 		}
 
+		setLanguage(messages);
+		
 		return container;
+	}
+	
+	@Inject
+	private void setLanguage(@Translation Messages messages) {
+		if (lblNewLabel != null && !lblNewLabel.isDisposed()) {
+			lblNewLabel.setText(messages.PasswordDialog_username);
+			lblPassword.setText(messages.PasswordDialog_password);
+			lblPassword.getParent().layout();
+		}
+		if (getButton(IDialogConstants.OK_ID) != null) {
+			getButton(IDialogConstants.OK_ID).setText(messages.PasswordDialog_ok);
+			getButton(IDialogConstants.CANCEL_ID).setText(messages.PasswordDialog_cancel);
+		}
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, Messages.PasswordDialog_ok, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, Messages.PasswordDialog_cancel, false);
+		createButton(parent, IDialogConstants.OK_ID, messages.PasswordDialog_ok, true);
+		createButton(parent, IDialogConstants.CANCEL_ID, messages.PasswordDialog_cancel, false);
 	}
 
 	@Override
