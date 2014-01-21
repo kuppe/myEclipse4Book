@@ -10,7 +10,10 @@
  *******************************************************************************/
 package com.example.e4.rcp.todo.renderer;
 
-import org.eclipse.e4.ui.internal.workbench.swt.CSSRenderingUtils;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
@@ -20,13 +23,8 @@ import org.eclipse.e4.ui.workbench.renderers.swt.StackRenderer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.w3c.dom.css.CSSValue;
 
 @SuppressWarnings("restriction")
 public class MyStackRenderer extends StackRenderer {
@@ -35,40 +33,70 @@ public class MyStackRenderer extends StackRenderer {
 
 	@Override
 	public Object createWidget(MUIElement element, Object parent) {
-		if (!(element instanceof MPartStack) || !(parent instanceof Composite))
-			return null;
+		try {
+			if (!(element instanceof MPartStack) || !(parent instanceof Composite))
+				return null;
 
-		Composite parentComposite = (Composite) parent;
+			Composite parentComposite = (Composite) parent;
 
-		// Ensure that all rendered PartStacks have an Id
-		if (element.getElementId() == null
-				|| element.getElementId().length() == 0) {
-			String generatedId = "PartStack@" + Integer.toHexString(element.hashCode()); //$NON-NLS-1$
-			element.setElementId(generatedId);
+			// Ensure that all rendered PartStacks have an Id
+			if (element.getElementId() == null
+					|| element.getElementId().length() == 0) {
+				String generatedId = "PartStack@" + Integer.toHexString(element.hashCode()); //$NON-NLS-1$
+				element.setElementId(generatedId);
+			}
+
+			// TBD: need to define attributes to handle this
+			final CTabFolder ctf = new CTabFolder(parentComposite, SWT.BORDER
+					| (element.getTags().contains(STACK_BOTTOM) ? SWT.BOTTOM
+							: SWT.NONE));
+			Method getInitialMRUValue = StackRenderer.class.getDeclaredMethod(
+					"getInitialMRUValue", Control.class);
+			getInitialMRUValue.setAccessible(true);
+			ctf.setMRUVisible((Boolean) getInitialMRUValue.invoke(this, ctf));
+
+			// Adjust the minimum chars based on the location
+			int location = modelService.getElementLocation(element);
+			if ((location & EModelService.IN_SHARED_AREA) != 0) {
+				Field minEditorChars = StackRenderer.class.getDeclaredField("MIN_EDITOR_CHARS");
+				minEditorChars.setAccessible(true);
+				ctf.setMinimumCharacters(minEditorChars.getInt(this));
+				ctf.setUnselectedCloseVisible(true);
+			} else {
+				Field minViewChars = StackRenderer.class.getDeclaredField("MIN_VIEW_CHARS");
+				minViewChars.setAccessible(true);
+				ctf.setMinimumCharacters(minViewChars.getInt(this));
+				ctf.setUnselectedCloseVisible(false);
+			}
+
+			bindWidget(element, ctf); // ?? Do we need this ?
+
+			// Add a composite to manage the view's TB and Menu
+			Method addTopRight = StackRenderer.class.getDeclaredMethod(
+					"addTopRight", CTabFolder.class);
+			addTopRight.setAccessible(true);
+			addTopRight.invoke(this, ctf);
+
+			return ctf;
+		} catch (SecurityException e) {
+			e.printStackTrace();
+			return super.createWidget(element, parent);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			return super.createWidget(element, parent);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return super.createWidget(element, parent);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return super.createWidget(element, parent);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			return super.createWidget(element, parent);
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+			return super.createWidget(element, parent);
 		}
-
-		// TBD: need to define attributes to handle this
-		final CTabFolder ctf = new CTabFolder(parentComposite, SWT.BORDER
-				| (element.getTags().contains(STACK_BOTTOM) ? SWT.BOTTOM
-						: SWT.NONE));
-		ctf.setMRUVisible(getInitialMRUValue(ctf));
-
-		// Adjust the minimum chars based on the location
-		int location = modelService.getElementLocation(element);
-		if ((location & EModelService.IN_SHARED_AREA) != 0) {
-			ctf.setMinimumCharacters(MIN_EDITOR_CHARS);
-			ctf.setUnselectedCloseVisible(true);
-		} else {
-			ctf.setMinimumCharacters(MIN_VIEW_CHARS);
-			ctf.setUnselectedCloseVisible(false);
-		}
-
-		bindWidget(element, ctf); // ?? Do we need this ?
-
-		// Add a composite to manage the view's TB and Menu
-		addTopRight(ctf);
-
-		return ctf;
 	}
 
 	protected void updateTab(CTabItem cti, MPart part, String attName,
@@ -87,56 +115,5 @@ public class MyStackRenderer extends StackRenderer {
 		} else {
 			super.updateTab(cti, part, attName, newValue);
 		}
-	}
-
-	/*
-	 * Ignore below this line (has simply been copied from the original class)
-	 */
-
-	// Minimum characters in for stacks outside the shared area
-	private static int MIN_VIEW_CHARS = 1;
-
-	// Minimum characters in for stacks inside the shared area
-	private static int MIN_EDITOR_CHARS = 15;
-
-	// View Menu / TB data constants
-	private static final String TOP_RIGHT = "topRight"; //$NON-NLS-1$
-
-	private boolean getInitialMRUValue(Control control) {
-		boolean result = false;
-		CSSRenderingUtils util = context.get(CSSRenderingUtils.class);
-		if (util == null)
-			return result;
-
-		CSSValue value = util.getCSSValue(control,
-				"MPartStack", "swt-mru-visible"); //$NON-NLS-1$ //$NON-NLS-2$
-
-		if (value == null) {
-			value = util.getCSSValue(control, "MPartStack", "mru-visible"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		if (value == null)
-			return result;
-
-		return Boolean.parseBoolean(value.getCssText());
-	}
-
-	/**
-	 * @param ctf
-	 */
-	private void addTopRight(CTabFolder ctf) {
-		Composite trComp = new Composite(ctf, SWT.NONE);
-		trComp.setBackground(Display.getCurrent().getSystemColor(
-				SWT.COLOR_DARK_CYAN));
-		RowLayout rl = new RowLayout();
-		trComp.setLayout(rl);
-		rl.marginBottom = rl.marginTop = rl.marginRight = rl.marginLeft = 0;
-		ctf.setData(TOP_RIGHT, trComp);
-		ctf.addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				Composite c = (Composite) e.widget.getData(TOP_RIGHT);
-				if (c != null && !c.isDisposed())
-					c.dispose();
-			}
-		});
 	}
 }
